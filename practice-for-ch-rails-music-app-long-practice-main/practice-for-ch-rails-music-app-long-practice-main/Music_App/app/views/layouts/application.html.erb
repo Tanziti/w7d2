@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MusicApp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application" %>
+  </head>
+
+  <body>
+   <nav class="main-nav">
+    <h1><a href="<%= root_url %>" > MusicApp</a></h1>
+    <div>
+      <% if !logged_in? %>
+        <a href="<%= new_session_url %>">Sign in</a>
+        <a href="<%= new_user_url%>">Sign up </a>
+      <% else %>
+        <%= current_user.email %>
+          <form action="<%= session_url %>" method="post">
+            <input
+              type="hidden"
+              name="authenticity_token"
+              value="<%= form_authenticity_token %>"
+            >
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" value="Logout">
+          </form>
+      <% end %>
+     </nav>
+  <main> 
+    <%= yield %>
+    </main>
+  </body>
+</html>
